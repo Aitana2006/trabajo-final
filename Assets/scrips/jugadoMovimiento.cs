@@ -32,6 +32,8 @@ public class jugadoMovimiento : MonoBehaviour
     [SerializeField] private float fpsCaminar = 8f;
     [SerializeField] private float fpsIdle = 4f;
     [SerializeField] private float fpsSalto = 10f;
+    [Header("Animacion")]
+    private Animator animator; 
 
     private float timerAnimacion = 0f;
     private int frameAnimacion = 0;
@@ -47,6 +49,7 @@ public class jugadoMovimiento : MonoBehaviour
     private void Awake()
     {
         rb2D = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         if (spriteRenderer == null)
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -60,8 +63,7 @@ public class jugadoMovimiento : MonoBehaviour
 
     private void Update()
     {
-#if ENABLE_INPUT_SYSTEM
-        // Soporte para Nuevo Input System
+        animator.SetFloat("Horizontal", Mathf.Abs(movimientoHorizontal));
         float horizontal = 0f;
         if (Keyboard.current != null)
         {
@@ -80,17 +82,14 @@ public class jugadoMovimiento : MonoBehaviour
         {
             tiempoBufferSalto = duracionBufferSalto;
         }
-#endif
 
-#if ENABLE_LEGACY_INPUT_MANAGER
-        // Input tradicional
-        movimientoHorizontal = Input.GetAxisRaw("Horizontal") * velocidadDeMovimiento;
+
+                movimientoHorizontal = Input.GetAxisRaw("Horizontal") * velocidadDeMovimiento;
 
         if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             tiempoBufferSalto = duracionBufferSalto;
         }
-#endif
 
         GestionarAnimaciones();
     }
