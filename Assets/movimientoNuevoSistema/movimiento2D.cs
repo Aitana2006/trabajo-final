@@ -12,6 +12,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     public Transform controladorSuelo;
     public Vector3 dimensionesCaja;
     public bool enSuelo;
+    private Animator animator;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         {
             rb2D = GetComponent<Rigidbody2D>();
         }
+        animator = GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -46,6 +48,12 @@ public class NewMonoBehaviourScript : MonoBehaviour
         {
             enSuelo = Physics2D.OverlapBox(controladorSuelo.position, dimensionesCaja, 0f, queEsSuelo);
         }
+
+        if (animator != null)
+        {
+            animator.SetFloat("horizontal", Mathf.Abs(direccion.x));
+            animator.SetBool("estaEnSuelo", enSuelo);
+        }
     }
 
     private void FixedUpdate()
@@ -53,6 +61,12 @@ public class NewMonoBehaviourScript : MonoBehaviour
         if (rb2D != null)
         {
             rb2D.linearVelocity = new Vector2(direccion.x * velocidadMovimiento, rb2D.linearVelocity.y);
+
+            // Freno de caida: gravedad extra cuando baja
+            if (rb2D.linearVelocity.y < 0)
+            {
+                rb2D.linearVelocity += Vector2.up * Physics2D.gravity.y * 2.5f * Time.fixedDeltaTime;
+            }
         }
     }
 
