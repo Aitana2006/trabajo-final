@@ -2,13 +2,13 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - suelo
   - Water
   - UI
   - 
@@ -38,6 +38,20 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: fondo
+    uniqueID: 938544153
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: suelo
+    uniqueID: 1434147423
+    locked: 0
+  - name: enemigos
+    uniqueID: 1678458885
+    locked: 0
+  - name: jugador
+    uniqueID: 1220198785
+    locked: 0
+  m_RenderingLayers:
+  - Default
